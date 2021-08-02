@@ -1,5 +1,6 @@
 #include "UdpClient.h"
 #include <QTime>
+#include "nmea/nmea_zda.h"
 
 UdpClient::UdpClient(QObject* pwgt) : QObject(pwgt){
 
@@ -17,13 +18,12 @@ void UdpClient::slotProcessData(){
     do{
         baData.resize(pudp->pendingDatagramSize());
         pudp->readDatagram(baData.data(), baData.size());
-    } while(pudp->hasPendingDatagrams());
+    }
+    while(pudp->hasPendingDatagrams());
 
-    QTime time;
+    std::string sPacket(baData.constData(), baData.length());
+    nmea::CNmeaPacket packet(sPacket);
 
-    QDataStream in(&baData, QIODevice::ReadOnly);
-    in >> time;
 
-    QTextStream cout(stdout);
-    cout << "Accept Time: " << time.toString() << endl;
+    std::cout << "Accept Time Nmea: " << packet.GetString() << std::endl;
 }

@@ -26,4 +26,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    UdpClient.h
+    UdpClient.h \
+    nmea/nmea_packet.h \
+    nmea/nmea_zda.h \
+    nmea/t_nmea.h
