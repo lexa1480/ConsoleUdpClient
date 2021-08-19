@@ -1,23 +1,23 @@
-#ifndef CLIENTUDP_H
-#define CLIENTUDP_H
+#ifndef UDPCLIENT_H
+#define UDPCLIENT_H
 
 #include <QObject>
-#include <QUdpSocket>
+#include <iostream>
+#include <ip_st_x3.h>
 
 class UdpClient : public QObject
 {
     Q_OBJECT
 
 private:
-    QUdpSocket* pudp;
+    ip_st_x::CStPlugMain m_plugIpSt;
+    ip_st_x::CStPlugClient m_plugClient;
 
 public:
-    UdpClient(QObject* pwgt = 0);
+    UdpClient(ip_st_x::CStPlugMain &m_plugIpSt, ip_st_x::CStPlugClient &m_plugClient, QObject* pwgt = 0);
 
 public slots:
-    void slotProcessData();
-
-
+    void exitHandler();
 };
 
-#endif // CLIENTUDP_H
+#endif // UDPCLIENT_H
